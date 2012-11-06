@@ -1,0 +1,480 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Gauss</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2012-10-29"><meta name="DC.source" content="Gauss.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> Gauss()
+    Aufgabenteil = <span class="string">'a'</span>
+    aufgabenteil_a();
+
+    Aufgabenteil = <span class="string">'b'</span>
+    <span class="comment">%aufgabenteil_b();</span>
+
+    Aufgabenteil = <span class="string">'c'</span>
+    <span class="comment">%aufgabenteil_c();</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> aufgabenteil_a()
+    <span class="comment">% A und b wie in Aufgabe 1</span>
+    A = [2 3 -1; 3 4.5 -2; 4 2 0];
+    b = [4; -2; 3];
+    <span class="comment">% Wende Gauss mit Spaltenpivotsuche an, da sonst ein Element == 0 wird</span>
+    [A, b] = doGauss(A,b,1);
+    <span class="comment">% LR-Zerlegung von A</span>
+    A
+    <span class="comment">% L?sungsvektor x des LGS Ax=b</span>
+    b
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> aufgabenteil_b()
+    <span class="keyword">for</span> l=6:20
+        A = [10^(-l) 1; 1 1];
+        b = [1; 2];
+        <span class="comment">% L?se Ax=b ohne und mit Spaltenpivotsuche</span>
+        [C, ohne_pivot] = doGauss(A, b, 0);
+        [E, mit_pivot] = doGauss(A, b, 1);
+        <span class="comment">% Genauigkeit der Eingabe</span>
+        l
+        <span class="comment">% L?sungsvektor x des LGS Ax=b ohne Spaltenpivotsuche</span>
+        ohne_pivot
+        <span class="comment">% L?sungsvektor x des LGS Ax=b mit Spaltenpivotsuche</span>
+        mit_pivot
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> aufgabenteil_c()
+    <span class="comment">% beschr?nke MATLAB auf einen physischen Kern</span>
+    maxNumCompThreads(1);
+    <span class="comment">% Gr??e der quadratischen Matrix A</span>
+    n = [5;10;50;100;1000];
+    <span class="keyword">for</span> i=1:5;
+        n(i)
+        <span class="comment">% erzeuge A als nxn-Matrix mit pseudozuf?lligen Elementen</span>
+        A = rand( n(i) );
+        <span class="comment">% erzeuge b als Vektor mit n pseudozuf?lligen Elementen</span>
+        b = rand( n(i), 1 );
+        tic;
+        [A, b] = doGauss(A, b, 1);
+        <span class="comment">% Zeit, die unser Algorithmus f&cedil;r die L?sung des LGS ben?tigt</span>
+        t_we = toc
+        tic;
+        A\b;
+        <span class="comment">% Zeit, die die MATLAB-Implementation ben?tigt</span>
+        t_matlab = toc
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% F&cedil;hre eine LR-Zerlegung durch und berechne den L?sungsvektor</span>
+<span class="comment">% @param    Matrix      A               Die Matrix des zu l?senden LGS</span>
+<span class="comment">% @param    Vektor      b               Der L?sungsvektor des zu l?senden</span>
+<span class="comment">%                                       LGS</span>
+<span class="comment">% @param    boolean     pivot_flag      ==1: f&cedil;hre Spaltenpivotsuche durch</span>
+<span class="comment">%                                       (sonst nicht)</span>
+<span class="comment">% @return   Matrix      A               LR-Zerlegung von A</span>
+<span class="comment">% @return   Vektor      b               L?sungsvektor x des LGS Ax=b</span>
+<span class="keyword">function</span> [A, b] = doGauss( A, b, pivot_flag )
+    [A, P] = LU_decomposition(A, pivot_flag);
+    b = compute(A, b, P);
+<span class="keyword">end</span>
+
+<span class="comment">% Hilfsfunktion f&cedil;r die LR-Zerlegung einer Matrix</span>
+<span class="comment">% @param    Matrix      A               Die Matrix, die LR-zerlegt werden soll</span>
+<span class="comment">% @param    boolean     pivot_flag</span>
+<span class="comment">% @return   Matrix      A               LR-Zerlegung von A</span>
+<span class="comment">% @return   Matrix      P               Permutationsmatrix</span>
+<span class="keyword">function</span> [A, P] = LU_decomposition(A, pivot_flag)
+    [m, n] = size(A);
+    <span class="comment">% erzeuge eine neue Permutationsmatrix P = I</span>
+    P = diag(ones(1,n));
+    <span class="comment">% betrachte i-te Zeile</span>
+    <span class="keyword">for</span> i=1:(n-1)
+        <span class="comment">% soll eine Spaltenpivotsuche duruchgef&cedil;hrt werden?</span>
+        <span class="keyword">if</span> (pivot_flag == 1)
+            [A, P] = column_pivot(A, P, i, n);
+        <span class="keyword">end</span>
+        <span class="comment">% betrachte j-te Zeile</span>
+        <span class="keyword">for</span> j=(i+1):n
+            <span class="comment">% nach Satz 3.3 m&cedil;ssen alle A(i,i)~=0 sein</span>
+            <span class="keyword">if</span> (A(i,i)~=0)
+                l = A(j,i)/A(i,i);
+                <span class="comment">% betrachte k-te Spalte</span>
+                <span class="keyword">for</span> k=(i+1):n
+                    A(j,k) = A(j,k) - l*A(i,k);
+                <span class="keyword">end</span>
+                <span class="comment">% L-Matrix</span>
+                A(j,i) = l;
+            <span class="comment">% sonst wird ein Fehler zur&cedil;ckgegeben</span>
+            <span class="comment">% die Ausgaben durch die Hauptfunktion finden weiterhin statt</span>
+            <span class="keyword">else</span>
+                error = <span class="string">'ACHTUNG ACHTUNG! A('</span>;
+                error = cat(2,error,num2str(i));
+                error = cat(2,error,<span class="string">','</span>);
+                error = cat(2,error,num2str(i));
+                error = cat(2,error,<span class="string">')=0, vertrauen Sie den folgenden Ergebnissen nicht!'</span>)
+                <span class="keyword">break</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% F&cedil;hre eine Spaltenpivotsuche durch</span>
+<span class="comment">% @param    Matrix      A               Die zu bearbeitende Matrix</span>
+<span class="comment">% @param    Matrix      P               Das Produkt der bisherigen</span>
+<span class="comment">%                                       Permutationsmatrizen</span>
+<span class="comment">% @param    Integer     i               Die zu bearbeitende Spalte</span>
+<span class="comment">% @param    Integer     n               Gr??e der Matrix A</span>
+<span class="comment">% @return   Matrix      A               Die spaltenpivotdurchsuchte Matrix</span>
+<span class="comment">% @return   Matrix      P               P^(i)*P</span>
+<span class="keyword">function</span> [A, P] = column_pivot(A, P, i, n)
+    max_value = 0;
+    max_pos   = 0;
+    <span class="comment">% betrachte j-te Zeile</span>
+    <span class="keyword">for</span> j=i:n
+        <span class="keyword">if</span> (abs(A(j,i)) &gt; max_value)
+            <span class="comment">% speicher den Wert und die Zeile des optimalen Tauschpartners</span>
+            max_value = abs(A(j,i));
+            max_pos   = j;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    <span class="comment">% vertausche i-te und max_pos-te Zeile in der Matrix A</span>
+    A([i,max_pos],:) = A([max_pos,i],:);
+    <span class="comment">% erzeuge eine neue Permutationsmatrix P^(i) = I</span>
+    P_i = diag(ones(1,n));
+    <span class="comment">% vertausche i-te und max_pos-te Zeile in der Matrix P^(i)</span>
+    P_i([i,max_pos],:) = P_i([max_pos,i],:);
+    <span class="comment">% transponiere P^(i) um an eine Spaltenvertauschung zu gelangen</span>
+    P_i = transpose(P_i);
+    <span class="comment">% berechne P^(i)*P</span>
+    P = P_i * P;
+<span class="keyword">end</span>
+
+<span class="comment">% Berechne den L?sungsvektor des LGS PAx=Pb</span>
+<span class="comment">% @param    Matrix      A</span>
+<span class="comment">% @param    Vektor      b</span>
+<span class="comment">% @param    Matrix      P</span>
+<span class="comment">% @return   Vektor      b               L?sungsvektor x des LGS PAx=Pb</span>
+<span class="keyword">function</span> b = compute(A, b, P)
+    <span class="comment">% wende die Permutationsmatrix P auf den Vektor b an, speicher das</span>
+    <span class="comment">% Resultat in b</span>
+    b = P*b;
+    <span class="comment">% l?se Ly=b durch vorw?rtseinsetzen, speicher y in b</span>
+    b = forward_insert(A,b);
+    <span class="comment">% l?se Rx=b durch r&cedil;ckw?rtseinsetzen, speicher x in b</span>
+    b = backward_insert(A,b);
+<span class="keyword">end</span>
+
+<span class="comment">% L?se das LGS Ly=b durch vorw?rtseinsetzen</span>
+<span class="comment">% @param    Matrix      A</span>
+<span class="comment">% @param    Vektor      b</span>
+<span class="comment">% @result   Vektor      b               L?sungsvektor y des LGS Ly=b</span>
+<span class="keyword">function</span> b = forward_insert(A,b)
+    [m, n] = size(A);
+    <span class="comment">% betrachte i-te Zeile</span>
+    <span class="keyword">for</span> i=2:n
+        <span class="comment">% betrachte j-te Spalte</span>
+        <span class="keyword">for</span> j=1:(i-1)
+            b(i) = b(i) - (A(i,j)*b(j));
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% L?se das LGS Rx=b durch r&cedil;ckw?rtseinsetzen</span>
+<span class="comment">% @param    Matrix      A</span>
+<span class="comment">% @param    Vektor      b</span>
+<span class="comment">% @result   Vektor      b               L?sungsvektor x des LGS Rx=b</span>
+<span class="keyword">function</span> b = backward_insert(A,b)
+    [m, n] = size(A);
+    <span class="comment">% betrachte (n-i)-te Zeile</span>
+    <span class="keyword">for</span> i=0:(n-1)
+        <span class="comment">% betrachte (n-j)-te Spalte</span>
+        <span class="keyword">for</span> j=0:(i-1)
+            b(n-i) = b(n-i) - (A(n-i, n-j)*b(n-j));
+        <span class="keyword">end</span>
+        b(n-i) = b(n-i)/A(n-i,n-i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+Aufgabenteil =
+
+a
+
+
+A =
+
+    4.0000    2.0000         0
+    0.7500    3.0000   -2.0000
+    0.5000    0.6667    0.3333
+
+
+b =
+
+   -3.8750
+    9.2500
+   16.0000
+
+
+Aufgabenteil =
+
+b
+
+
+Aufgabenteil =
+
+c
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function Gauss()
+    Aufgabenteil = 'a'
+    aufgabenteil_a();
+    
+    Aufgabenteil = 'b'
+    %aufgabenteil_b();
+    
+    Aufgabenteil = 'c'
+    %aufgabenteil_c();
+end
+
+function aufgabenteil_a()
+    % A und b wie in Aufgabe 1
+    A = [2 3 -1; 3 4.5 -2; 4 2 0];
+    b = [4; -2; 3];
+    % Wende Gauss mit Spaltenpivotsuche an, da sonst ein Element == 0 wird
+    [A, b] = doGauss(A,b,1);
+    % LR-Zerlegung von A
+    A
+    % L?sungsvektor x des LGS Ax=b
+    b
+end
+
+function aufgabenteil_b()
+    for l=6:20
+        A = [10^(-l) 1; 1 1];
+        b = [1; 2];
+        % L?se Ax=b ohne und mit Spaltenpivotsuche
+        [C, ohne_pivot] = doGauss(A, b, 0);
+        [E, mit_pivot] = doGauss(A, b, 1);
+        % Genauigkeit der Eingabe
+        l
+        % L?sungsvektor x des LGS Ax=b ohne Spaltenpivotsuche
+        ohne_pivot
+        % L?sungsvektor x des LGS Ax=b mit Spaltenpivotsuche
+        mit_pivot
+    end
+end
+
+function aufgabenteil_c()
+    % beschr?nke MATLAB auf einen physischen Kern
+    maxNumCompThreads(1);
+    % Gr??e der quadratischen Matrix A
+    n = [5;10;50;100;1000];
+    for i=1:5;
+        n(i)
+        % erzeuge A als nxn-Matrix mit pseudozuf?lligen Elementen
+        A = rand( n(i) );
+        % erzeuge b als Vektor mit n pseudozuf?lligen Elementen
+        b = rand( n(i), 1 );
+        tic;
+        [A, b] = doGauss(A, b, 1);
+        % Zeit, die unser Algorithmus f¸r die L?sung des LGS ben?tigt
+        t_we = toc
+        tic;
+        A\b;
+        % Zeit, die die MATLAB-Implementation ben?tigt
+        t_matlab = toc
+    end
+end
+
+% F¸hre eine LR-Zerlegung durch und berechne den L?sungsvektor
+% @param    Matrix      A               Die Matrix des zu l?senden LGS
+% @param    Vektor      b               Der L?sungsvektor des zu l?senden
+%                                       LGS
+% @param    boolean     pivot_flag      ==1: f¸hre Spaltenpivotsuche durch
+%                                       (sonst nicht)
+% @return   Matrix      A               LR-Zerlegung von A
+% @return   Vektor      b               L?sungsvektor x des LGS Ax=b
+function [A, b] = doGauss( A, b, pivot_flag )
+    [A, P] = LU_decomposition(A, pivot_flag);
+    b = compute(A, b, P);
+end
+
+% Hilfsfunktion f¸r die LR-Zerlegung einer Matrix
+% @param    Matrix      A               Die Matrix, die LR-zerlegt werden soll
+% @param    boolean     pivot_flag
+% @return   Matrix      A               LR-Zerlegung von A
+% @return   Matrix      P               Permutationsmatrix
+function [A, P] = LU_decomposition(A, pivot_flag)
+    [m, n] = size(A);
+    % erzeuge eine neue Permutationsmatrix P = I
+    P = diag(ones(1,n));
+    % betrachte i-te Zeile
+    for i=1:(n-1)
+        % soll eine Spaltenpivotsuche duruchgef¸hrt werden?
+        if (pivot_flag == 1)
+            [A, P] = column_pivot(A, P, i, n);
+        end
+        % betrachte j-te Zeile
+        for j=(i+1):n
+            % nach Satz 3.3 m¸ssen alle A(i,i)~=0 sein
+            if (A(i,i)~=0)
+                l = A(j,i)/A(i,i);
+                % betrachte k-te Spalte
+                for k=(i+1):n
+                    A(j,k) = A(j,k) - l*A(i,k);
+                end
+                % L-Matrix
+                A(j,i) = l;
+            % sonst wird ein Fehler zur¸ckgegeben
+            % die Ausgaben durch die Hauptfunktion finden weiterhin statt
+            else
+                error = 'ACHTUNG ACHTUNG! A(';
+                error = cat(2,error,num2str(i));
+                error = cat(2,error,',');
+                error = cat(2,error,num2str(i));
+                error = cat(2,error,')=0, vertrauen Sie den folgenden Ergebnissen nicht!')
+                break
+            end
+        end
+    end
+end
+
+% F¸hre eine Spaltenpivotsuche durch
+% @param    Matrix      A               Die zu bearbeitende Matrix
+% @param    Matrix      P               Das Produkt der bisherigen
+%                                       Permutationsmatrizen
+% @param    Integer     i               Die zu bearbeitende Spalte
+% @param    Integer     n               Gr??e der Matrix A
+% @return   Matrix      A               Die spaltenpivotdurchsuchte Matrix
+% @return   Matrix      P               P^(i)*P
+function [A, P] = column_pivot(A, P, i, n)
+    max_value = 0;
+    max_pos   = 0;
+    % betrachte j-te Zeile
+    for j=i:n
+        if (abs(A(j,i)) > max_value)
+            % speicher den Wert und die Zeile des optimalen Tauschpartners
+            max_value = abs(A(j,i));
+            max_pos   = j;
+        end
+    end
+    % vertausche i-te und max_pos-te Zeile in der Matrix A
+    A([i,max_pos],:) = A([max_pos,i],:);
+    % erzeuge eine neue Permutationsmatrix P^(i) = I
+    P_i = diag(ones(1,n));
+    % vertausche i-te und max_pos-te Zeile in der Matrix P^(i)
+    P_i([i,max_pos],:) = P_i([max_pos,i],:);
+    % transponiere P^(i) um an eine Spaltenvertauschung zu gelangen
+    P_i = transpose(P_i);
+    % berechne P^(i)*P
+    P = P_i * P;
+end
+
+% Berechne den L?sungsvektor des LGS PAx=Pb
+% @param    Matrix      A
+% @param    Vektor      b
+% @param    Matrix      P
+% @return   Vektor      b               L?sungsvektor x des LGS PAx=Pb
+function b = compute(A, b, P)
+    % wende die Permutationsmatrix P auf den Vektor b an, speicher das
+    % Resultat in b
+    b = P*b;
+    % l?se Ly=b durch vorw?rtseinsetzen, speicher y in b
+    b = forward_insert(A,b);
+    % l?se Rx=b durch r¸ckw?rtseinsetzen, speicher x in b
+    b = backward_insert(A,b);
+end
+
+% L?se das LGS Ly=b durch vorw?rtseinsetzen
+% @param    Matrix      A
+% @param    Vektor      b
+% @result   Vektor      b               L?sungsvektor y des LGS Ly=b
+function b = forward_insert(A,b)
+    [m, n] = size(A);
+    % betrachte i-te Zeile
+    for i=2:n
+        % betrachte j-te Spalte
+        for j=1:(i-1)
+            b(i) = b(i) - (A(i,j)*b(j));
+        end
+    end
+end
+
+% L?se das LGS Rx=b durch r¸ckw?rtseinsetzen
+% @param    Matrix      A
+% @param    Vektor      b
+% @result   Vektor      b               L?sungsvektor x des LGS Rx=b
+function b = backward_insert(A,b)
+    [m, n] = size(A);
+    % betrachte (n-i)-te Zeile 
+    for i=0:(n-1)
+        % betrachte (n-j)-te Spalte
+        for j=0:(i-1)
+            b(n-i) = b(n-i) - (A(n-i, n-j)*b(n-j));
+        end
+        b(n-i) = b(n-i)/A(n-i,n-i);
+    end
+end
+##### SOURCE END #####
+--></body></html>
