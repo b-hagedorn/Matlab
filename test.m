@@ -1,4 +1,4 @@
-function blatt5()
+function test()
 A = [3 -6; 4 -8; 0 1];
 [QR, alpha] = qrDecomposition( A )
 end
